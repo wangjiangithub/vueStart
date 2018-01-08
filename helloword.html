@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+<style type="text/css">
+	.hello{
+		font-size: 20px;
+		color: #f0f0f0;
+		background: red;
+	}
+</style>
+<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{ message | captalize}}</p>
+    <input v-model="message">
+    <p>哈哈哈{{wang | captalize}}</p>
+    
+    <input type='text' v-model="wang">
+    <button v-on:click="fanzhuan">dianji</button>
+
+    <p>原始字符串: {{ messageone }}</p>
+    <p>计算后反转字符串: {{ reversedMessageone }}</p>
+    <p>使用方法后反转字符串: {{ reversedMessageone2() }}</p>
+    
+</div>
+
+<div id="wang">
+	<ul>
+		<template v-for="excle in vexcle">
+			<li v-bind:class="{ hello: isActive }">{{excle.name}}</li>
+			<li>-----------------------</li>
+		</template>
+		<li v-for="(value,key,index) in object">{{index}}.{{key}}:{{value}}</li>
+	</ul>
+</div>
+    
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    message: 'Runoob!',
+	wang:'woshi',
+	messageone: 'TunooG!',
+  },
+  methods:{
+    fanzhuan:function(){
+        this.wang=this.wang.split('').reverse().join('');
+        this.message=this.message.split('').reverse().join('');
+    },
+    reversedMessageone2:function(){
+    	return this.messageone.split('').reverse().join('')
+    }
+  },
+  filters:{
+    captalize:function(value){
+        if(!value) return '';
+        value = value.toString();
+        return value.charAt(0).toUpperCase() + value.slice(1)
+    }
+  },
+  computed:{
+	reversedMessageone:function(){
+		return this.messageone.split('').reverse().join('')
+	}
+  },
+
+
+})
+
+new Vue({
+	el: '#wang',
+	data:{
+		isActive: true,
+		vexcle:[
+			{name:'张三'},
+			{name:'李四'},
+			{name:'王五'}
+		],
+		object:{
+			name: 'nick',
+			age: 27,
+			pro: 'FF'
+		}
+	}
+})
+</script>
+</body>
+</html>
