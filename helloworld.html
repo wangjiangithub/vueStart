@@ -36,8 +36,26 @@
 		<li v-for="(value,key,index) in object">{{index}}.{{key}}:{{value}}</li>
 	</ul>
 </div>
+
+<div id="computed-test">
+	<p>---------------------------------</p>
+	<p>{{allsite}}</p>
+	<p>{{name}}</p>
+	<p>{{url}}</p>
+	<p>----------------------------------</p>
+	<input v-on:keyup.13="submit" type="button" value="监听enter键keycode-13提交">
+	<input @keyup.enter="submit" type="button" value="监听enter键提交">
+</div>
     
 <script>
+
+// v-bind用于绑定属性和数据 ，其缩写为" : " 也就是v-bind:id === :id
+
+// <!-- 同上 -->
+// <input v-on:keyup.enter="submit">
+// <!-- 缩写语法 -->
+// <input @keyup.enter="submit">
+
 new Vue({
   el: '#app',
   data: {
@@ -86,6 +104,33 @@ new Vue({
 		}
 	}
 })
+
+
+var vm = new Vue({
+	el: '#computed-test',
+	data:{
+		name: 'google',
+		url: 'http://www.google.com'
+	},
+	computed:{
+		allsite:{
+			get:function(){
+				return this.name+ ' '+this.url;
+			},
+			set:function(newvalue){
+				var names = newvalue.split(' ');
+				this.name = names[0];
+				this.url = names[names.length-1]
+			}
+		}
+	},
+	methods:{
+		submit:function(){
+			alert('我点击enter键')
+		}
+	}
+})
+vm.allsite='菜鸟教程 http://www.runoob.com';
 </script>
 </body>
 </html>
